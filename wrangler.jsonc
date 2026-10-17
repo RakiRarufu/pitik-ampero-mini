@@ -1,0 +1,7 @@
+{
+  // Cloudflare Workers static assets only: no Worker script, no server-side code, request logging off.
+  "name": "pitik-ampero-mini",
+  "compatibility_date": "2026-10-12",
+  "observability": { "enabled": false },
+  "assets": { "directory": "." }
+}

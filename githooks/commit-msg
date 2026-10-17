@@ -1,0 +1,9 @@
+#!/bin/sh
+# Owner rules: no Co-Authored-By trailer, one-line message with no body.
+msg=$(grep -v '^#' "$1")
+if printf '%s\n' "$msg" | grep -qi '^co-authored-by:'; then
+  echo "commit-msg: Co-Authored-By trailers are not allowed in this repo" >&2; exit 1
+fi
+if [ "$(printf '%s\n' "$msg" | sed '/^[[:space:]]*$/d' | wc -l)" -gt 1 ]; then
+  echo "commit-msg: one-line commit messages only (no body)" >&2; exit 1
+fi

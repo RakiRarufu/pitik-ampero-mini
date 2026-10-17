@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self'; connect-src 'none'; form-action 'none'">
+<title>Pitik for Hotone Ampero Mini (unofficial)</title>
+<style>
+  :root { --bg: #f6f7f5; --card: #fff; --text: #16191a; --muted: #5a6260; --line: #d9dedb; --accent: #0f7f72;
+          --accent-ink: #fff; --note: #e8f3f0; --err: #a00000; color-scheme: light; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #111413; --card: #1a1f1d; --text: #e9eeec; --muted: #9aa5a1; --line: #2c3431; --accent: #3fd8c2;
+            --accent-ink: #062521; --note: #17302b; --err: #ff7a7a; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 1.05rem/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 46rem; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+  header { padding: 1.5rem 0 .5rem; }
+  h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); line-height: 1.15; margin: 0 0 .25rem; letter-spacing: -.01em; }
+  h1 small { display: block; font-size: .5em; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-top: .35rem; }
+  h2 { font-size: 1.2rem; margin: 0 0 .6rem; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
+  a { color: var(--accent); text-underline-offset: .15em; }
+  a:hover { text-decoration-thickness: 2px; }
+  .note { background: var(--note); border-radius: 10px; padding: .7rem .9rem; }
+  .muted { color: var(--muted); font-size: .95rem; }
+  #drop { display: block; border: 2px dashed var(--line); border-radius: 12px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; }
+  #drop:hover, #drop.over { border-color: var(--accent); background: var(--note); }
+  #drop input { margin-top: .75rem; max-width: 100%; }
+  fieldset { border: 0; padding: 0; margin: 1.25rem 0; }
+  legend { font-weight: 600; margin-bottom: .6rem; }
+  .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+  .tile { display: block; border: 2px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); cursor: pointer; position: relative; }
+  .tile img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  .tile span { display: block; padding: .5rem .6rem; font-weight: 600; }
+  .tile span em { display: block; font-style: normal; font-weight: 400; color: var(--muted); font-size: .85rem; }
+  .tile.ref { cursor: default; opacity: .9; }
+  .tile input { position: absolute; opacity: 0; pointer-events: none; }
+  .tile:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
+  .tile:has(input:checked) span::after { content: " \2713"; color: var(--accent); }
+  .tile:has(input:focus-visible) { outline: 3px solid #e08a00; outline-offset: 2px; }
+  @media (max-width: 30rem) { .tiles { gap: .5rem; } .tile span em { display: none; } }
+  button, a.button { font: inherit; font-weight: 600; display: inline-block; padding: .8rem 1.3rem; border-radius: 10px; border: 0;
+                     background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; }
+  button:disabled { background: var(--line); color: var(--muted); cursor: default; }
+  :focus-visible { outline: 3px solid #e08a00; outline-offset: 2px; }
+  #status { margin: 1rem 0 0; word-break: break-all; }
+  .err { color: var(--err); font-weight: bold; }
+  code { font-size: .92em; overflow-wrap: anywhere; background: var(--bg); padding: .05em .3em; border-radius: 4px; }
+  ol, ul { padding-left: 1.3rem; } li { margin: .3rem 0; }
+  footer { color: var(--muted); font-size: .9rem; text-align: center; margin-top: 2rem; }
+  .bmc { display: inline-flex; align-items: center; gap: .4em; padding: .3em .75em; border-radius: 6px; background: #FFDD00;
+         color: #000; font-weight: 600; font-size: .95rem; line-height: 1.4; text-decoration: none; border: 1px solid rgba(0,0,0,.25); }
+  .bmc:hover { background: #ffe633; text-decoration: none; }
+  .bmc:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+  .bmc svg { width: 1.15em; height: 1.15em; flex: none; }
+</style>
+</head>
+<body>
+<main>
+<header><h1>Pitik <small>for Hotone Ampero Mini · unofficial</small></h1></header>
+<section>
+<p>Pitik changes one thing on the Ampero Mini: the <strong>teal footswitch light</strong> (the colour the footswitches
+show in preset mode) becomes <strong>off</strong> or <strong>white</strong>. Green, red and blue stay as they are.
+GLOBAL &gt; About shows which Pitik build is installed. Version <span id="ver"></span>, for Ampero Mini firmware
+<span id="fw"></span> only. (<i>pitik</i> is a flick, a pulse, a spark of light.)</p>
+<p class="note"><strong>Your file never leaves your browser.</strong> This page runs entirely on your device: nothing is
+uploaded, there is no tracking and no analytics, and it works offline. You can
+<a href="https://github.com/RakiRarufu/pitik-ampero-mini/archive/refs/heads/main.zip">download this page</a>
+(unzip it and open <code>index.html</code>) and use it without an internet connection.</p>
+
+</section>
+<section>
+<h2>1. Back up first</h2>
+<p>In the Ampero Editor, back up your <strong>presets</strong>. The editor cannot download Sound Clones or user IRs
+from the unit, so keep the original files of any you uploaded: they are what you would upload again if you ever
+need the recovery steps below.</p>
+
+</section>
+<section>
+<h2>2. Get the official firmware from Hotone</h2>
+<p>Download the Ampero Mini <strong>V2.2</strong> firmware from Hotone's support page
+(<a href="https://www.hotone.com/support/2">hotone.com/support</a>). You can drop the zip as it comes, or the file
+<code>Ampero Mini_firmware_V2.2.bin</code> inside it. We do not host Hotone's firmware; this page only works on that exact
+file and refuses any other.</p>
+
+</section>
+<section>
+<h2>3. Make your Pitik file</h2>
+<form id="form">
+<label id="drop" for="file">Drop the zip from Hotone, or the <code>.bin</code> inside it, here (or tap to choose it)
+  <br><input type="file" id="file" accept=".zip,.bin"></label>
+<fieldset>
+  <legend>Teal footswitch light: choose a photo</legend>
+  <div class="tiles">
+    <div class="tile ref"><img src="img/stock.webp" alt="Footswitch lit teal, as stock" width="320" height="320"><span>Stock teal<em>what you have now</em></span></div>
+    <label class="tile"><input type="radio" name="teal" value="off" checked><img src="img/off.webp" alt="Footswitch dark" width="320" height="320"><span>Off<em>dark where stock shows teal</em></span></label>
+    <label class="tile"><input type="radio" name="teal" value="white"><img src="img/white.webp" alt="Footswitch lit pale mint white" width="320" height="320"><span>White<em>looks pale mint</em></span></label>
+  </div>
+  <p class="muted">Photos of the same unit and camera settings. "White" is all three colours on; it looks pale mint because
+  the green light is the brightest (the light has only on/off per colour, no brightness steps). Cameras show teal a
+  little greener than it looks in person.</p>
+</fieldset>
+<button type="submit" id="go" disabled>Make the patched file</button>
+</form>
+<div id="status" role="status" aria-live="polite"></div>
+<p id="dl" hidden><a class="button" id="save" download>Download the patched file</a></p>
+
+</section>
+<section>
+<h2>4. Install it on the Ampero Mini</h2>
+<ol>
+  <li>Power the Ampero Mini off. <strong>Hold footswitch 1 (FS1)</strong> and power it on: it starts in update mode.</li>
+  <li>Connect it to the computer by USB and open the Ampero Editor.</li>
+  <li>The editor offers to install firmware on the unit in update mode. Choose the patched file you downloaded (not
+    Hotone's) and let it finish. Do not unplug or power off during the install.</li>
+  <li>After the restart, open GLOBAL &gt; About: it shows <code id="ident">V2.2 + Pitik ...</code>.</li>
+</ol>
+
+</section>
+<section>
+<h2>Going back to stock (recovery)</h2>
+<p>Do the same with Hotone's original <code>Ampero Mini_firmware_V2.2.bin</code>: power off, hold FS1, power on, install
+it from the Ampero Editor. This works even if the unit does not start normally, because update mode runs before the
+firmware. Restore your presets from your backup, and upload your Sound Clone and IR files again, if anything is missing.</p>
+
+</section>
+<section>
+<h2>Please read</h2>
+<ul>
+  <li>Pitik is <strong>not affiliated with or endorsed by Hotone</strong>. "Hotone" and "Ampero" are named only to say
+    what this tool is for.</li>
+  <li>Installing modified firmware may affect warranty claims. Installing Hotone's firmware again (above) puts the unit
+    back to stock.</li>
+  <li>Use at your own risk. The software is provided "as is", without warranty of any kind (MIT licence).</li>
+  <li>The patch contains only our own code and values; it is applied to the file you got from Hotone, on your device.
+    Source code: <a href="https://github.com/RakiRarufu/pitik-ampero-mini">github.com/RakiRarufu/pitik-ampero-mini</a>.</li>
+</ul>
+
+</section>
+<section>
+<h2>Support</h2>
+<p>Pitik is free, and nothing will ever be paywalled. If it is useful to you, you can leave a tip:
+<a href="https://buymeacoffee.com/rakirarufu" rel="noopener">buymeacoffee.com/rakirarufu</a>.</p>
+<p><a class="bmc" href="https://buymeacoffee.com/rakirarufu" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"
+  stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6z"/>
+  <path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H16.5"/><path d="M8 2.5c-.8 1 .8 2 0 3.5M12 2.5c-.8 1 .8 2 0 3.5"/></svg>Buy me a coffee</a></p>
+</section>
+</main>
+<script src="patch-data.js"></script>
+<script src="patcher.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

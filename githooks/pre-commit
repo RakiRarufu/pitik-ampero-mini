@@ -1,0 +1,13 @@
+#!/bin/sh
+# Blocks firmware and vendor files, even past .gitignore (git add -f): this repo ships only our own bytes.
+bad=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(bin|zip|pdf|elf|o)$')
+for f in $(git diff --cached --name-only --diff-filter=ACMR); do
+  s=$(git cat-file -s ":$f" 2>/dev/null || echo 0)
+  [ "$s" -gt 262144 ] && bad="$bad
+$f ($s bytes)"
+done
+if [ -n "$bad" ]; then
+  echo "pre-commit: refusing firmware/vendor/binary files:" >&2
+  echo "$bad" >&2
+  exit 1
+fi
