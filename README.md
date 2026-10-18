@@ -20,7 +20,8 @@ own device.
    so keep the original files of any you uploaded.
 2. Download the Ampero Mini **V2.2** firmware from Hotone's support page
    ([hotone.com/support](https://www.hotone.com/support/2)). Keep the zip as it is, or unzip it and use
-   `Ampero Mini_firmware_V2.2.bin`.
+   `Ampero Mini_firmware_V2.2.bin`. **Keep a copy of Hotone's file**: it is what you install to go back to stock, even
+   if Hotone's download page changes.
 3. Open the Pitik page (https://pitik-ampero-mini.raki-rarufu-dev.workers.dev, or `index.html` from this repository), drop the zip from Hotone (or the `.bin` inside it) on it, choose **off** or **white**, and download the patched
    file. The page runs entirely in your browser: **nothing is uploaded, there is no tracking, and it works offline**
    (download this repository as a zip, unzip it, open `index.html`). It only accepts the official V2.2 file, or Hotone's zip holding it
