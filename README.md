@@ -28,6 +28,7 @@ own device.
    (checked by the `.bin`'s sha256) and shows the sha256 of the file it makes.
 4. Install: power the Ampero Mini off, **hold footswitch 1 (FS1)** and power it on (update mode), connect USB, and
    install the patched file from the Ampero Editor. Do not unplug during the install.
+   Wait for the editor to finish. If the screen stays black after the restart, power-cycle the Mini; this is expected.
 5. GLOBAL > About shows `V2.2 + Pitik 1.0.0 ...`.
 
 Command line instead of the page (same code, same output): `node patcher.js "Ampero Mini_firmware_V2.2.bin" out.bin --teal off`

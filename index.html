@@ -7,10 +7,10 @@
 <title>Pitik for Hotone Ampero Mini (unofficial)</title>
 <style>
   :root { --bg: #f6f7f5; --card: #fff; --text: #16191a; --muted: #5a6260; --line: #d9dedb; --accent: #0f7f72;
-          --accent-ink: #fff; --note: #e8f3f0; --err: #a00000; color-scheme: light; }
+          --focus: #9b5900; --accent-ink: #fff; --note: #e8f3f0; --err: #a00000; color-scheme: light; }
   @media (prefers-color-scheme: dark) {
     :root { --bg: #111413; --card: #1a1f1d; --text: #e9eeec; --muted: #9aa5a1; --line: #2c3431; --accent: #3fd8c2;
-            --accent-ink: #062521; --note: #17302b; --err: #ff7a7a; color-scheme: dark; }
+            --focus: #ffb347; --accent-ink: #062521; --note: #17302b; --err: #ff7a7a; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 1.05rem/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
@@ -38,12 +38,12 @@
   .tile input { position: absolute; opacity: 0; pointer-events: none; }
   .tile:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
   .tile:has(input:checked) span::after { content: " \2713"; color: var(--accent); }
-  .tile:has(input:focus-visible) { outline: 3px solid #e08a00; outline-offset: 2px; }
+  .tile:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
   @media (max-width: 30rem) { .tiles { gap: .5rem; } .tile span em { display: none; } }
   button, a.button { font: inherit; font-weight: 600; display: inline-block; padding: .8rem 1.3rem; border-radius: 10px; border: 0;
                      background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; }
   button:disabled { background: var(--line); color: var(--muted); cursor: default; }
-  :focus-visible { outline: 3px solid #e08a00; outline-offset: 2px; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
   #status { margin: 1rem 0 0; overflow-wrap: anywhere; }
   .err { color: var(--err); font-weight: bold; }
   code { font-size: .92em; overflow-wrap: anywhere; background: var(--bg); padding: .05em .3em; border-radius: 4px; }
@@ -117,7 +117,7 @@ light live from this page): <a href="https://buymeacoffee.com/rakirarufu" rel="n
   <li>Connect it to the computer by USB and open the Ampero Editor.</li>
   <li>The editor offers to install firmware on the unit in update mode. Choose the patched file you downloaded (not
     Hotone's) and let it finish. Do not unplug or power off during the install.</li>
-  <li>After the restart, open GLOBAL &gt; About: it shows <code id="ident">V2.2 + Pitik ...</code>.</li>
+  <li>Wait for the editor to finish the install. If the screen stays black after the restart, <strong>power-cycle the Mini</strong>; this is expected. Then open GLOBAL &gt; About: it shows <code id="ident">V2.2 + Pitik ...</code>.</li>
 </ol>
 
 </section>
