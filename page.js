@@ -17,7 +17,7 @@
     try { r = await O.check(new Uint8Array(await file.arrayBuffer())); } catch (err) { say(`${file.name}: ${err.message}`, true); return; }
     input = r.bin; $('go').disabled = false;
     say(`${file.name}: ${r.zip ? `zip${r.zipKnown ? ` (Hotone's ${O.DATA.firmware} download)` : ''} holding the ` : ''}` +
-        `official ${O.DATA.firmware} firmware (sha256 ${r.sha}). Choose the light and make the file.`);
+        `official ${O.DATA.firmware} firmware (sha256 ${r.sha}). Choose the light and create the modified firmware.`);
   }
 
   $('file').addEventListener('change', e => take(e.target.files[0]));
@@ -37,7 +37,7 @@
       url = URL.createObjectURL(new Blob([r.out], { type: 'application/octet-stream' }));
       $('save').href = url; $('save').download = r.name; $('dl').hidden = false;
       $('ident').textContent = r.identity;
-      say(`Done: ${r.name}, sha256 ${r.sha256}. GLOBAL > About will show "${r.identity}".`);
+      say(`Done: ${r.name}, sha256 ${r.sha256}. Download and install this firmware using the Ampero Editor (step 4). After installation, GLOBAL > About will show "${r.identity}".`);
     } catch (err) { say(err.message, true); }
   });
 })();

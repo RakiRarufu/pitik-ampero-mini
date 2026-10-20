@@ -2,6 +2,8 @@
 
 *pitik* is a flick, a pulse, a spark of light.
 
+Pitik requires installing modified firmware on your Ampero Mini using the Ampero Editor.
+
 Pitik changes the **teal footswitch light** of the Hotone Ampero Mini (the colour the footswitches show in preset
 mode, and on a looper footswitch set to the drum machine while the drums play) to **off** or **white**. Green, red and
 blue stay as they are. White is all three colour channels on; on the unit it looks pale mint, because the green light is

@@ -60,6 +60,7 @@
 <main>
 <header><h1>Pitik <small>for Hotone Ampero Mini · unofficial</small></h1></header>
 <section>
+<p>Pitik requires installing modified firmware on your Ampero Mini using the Ampero Editor.</p>
 <p>Pitik changes one thing on the Ampero Mini: the <strong>teal footswitch light</strong> (the colour the footswitches
 show in preset mode) becomes <strong>off</strong> or <strong>white</strong>. Green, red and blue stay as they are.
 GLOBAL &gt; About shows which Pitik build is installed. Version <span id="ver"></span>, for Ampero Mini firmware
@@ -87,7 +88,7 @@ even if Hotone's download page changes.</p>
 
 </section>
 <section>
-<h2>3. Make your Pitik file</h2>
+<h2>3. Create your Pitik firmware</h2>
 <form id="form">
 <label id="drop" for="file">Drop the zip from Hotone, or the <code>.bin</code> inside it, here (or tap to choose it)
   <br><input type="file" id="file" accept=".zip,.bin"></label>
@@ -102,20 +103,20 @@ even if Hotone's download page changes.</p>
   the green light is the brightest (the light has only on/off per colour, no brightness steps). Cameras show teal a
   little greener than it looks in person.</p>
 </fieldset>
-<button type="submit" id="go" disabled>Make the patched file</button>
+<button type="submit" id="go" disabled>Create modified firmware</button>
 </form>
 <div id="status" role="status" aria-live="polite"></div>
-<div id="dl" hidden><p><a class="button" id="save" download>Download the patched file</a></p>
+<div id="dl" hidden><p><a class="button" id="save" download>Download modified firmware</a></p>
 <p class="muted">Pitik is free. If it works on your unit, a tip keeps the next version coming (next up: change the
 light live from this page): <a href="https://buymeacoffee.com/rakirarufu" rel="noopener">buy me a coffee</a>.</p></div>
 
 </section>
 <section>
-<h2>4. Install it on the Ampero Mini</h2>
+<h2>4. Install the modified firmware on your Mini</h2>
 <ol>
   <li>Power the Ampero Mini off. <strong>Hold footswitch 1 (FS1)</strong> and power it on: it starts in update mode.</li>
   <li>Connect it to the computer by USB and open the Ampero Editor.</li>
-  <li>The editor offers to install firmware on the unit in update mode. Choose the patched file you downloaded (not
+  <li>The editor offers to install firmware on the unit in update mode. Choose the modified firmware file you downloaded (not
     Hotone's) and let it finish. Do not unplug or power off during the install.</li>
   <li>Wait for the editor to finish the install. If the screen stays black after the restart, <strong>power-cycle the Mini</strong>; this is expected. Then open GLOBAL &gt; About: it shows <code id="ident">V2.2 + Pitik ...</code>.</li>
 </ol>
